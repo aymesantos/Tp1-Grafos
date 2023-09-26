@@ -44,16 +44,22 @@ if __name__ == "__main__":
                 print("Grafo não carregado.")
         elif escolha == '4':
             if grafo_atual:
-                vertice = input("Informe o vértice: ")
-                vizinhos = grafo.vizinhos_do_vertice(grafo_atual, vertice)
+                vertice = int(input("Informe o vértice: "))
+                if(vertice<1 or vertice>grafo.ordem_do_grafo(grafo_atual)):
+                    print("\nErro: VERTICE INVALIDO")
+                else:
+                    vizinhos = grafo.vizinhos_do_vertice(grafo_atual, vertice)
                 print("Vizinhos de", vertice, ":", vizinhos)
             else:
                 print("Grafo não carregado.")
         elif escolha == '5':
             if grafo_atual:
-                vertice = input("Informe o vértice: ")
-                grau = grafo.grau_do_vertice(grafo_atual, vertice)
-                print("Grau de", vertice, ":", grau)
+                vertice = int(input("Informe o vértice: "))
+                if (vertice < 1 or vertice > grafo.ordem_do_grafo(grafo_atual)):
+                    print("\nErro: VERTICE INVALIDO")
+                else:
+                    grau = grafo.grau_do_vertice(grafo_atual, vertice)
+                    print("Grau de", vertice, ":", grau)
             else:
                 print("Grafo não carregado.")
         elif escolha == '6':
