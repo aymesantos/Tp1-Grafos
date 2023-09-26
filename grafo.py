@@ -1,8 +1,15 @@
 import networkx as nx
 
-# Função para ler um grafo a partir de um arquivo GraphML
+
+# Função para ler um grafo a partir de um arquivo GraphML e definir pesos nas arestas
 def ler_grafo(file_path):
-    return nx.read_graphml(file_path)
+    grafo = nx.read_graphml(file_path)
+
+    # Define pesos nas arestas com base nos atributos "weight"
+    for u, v, data in grafo.edges(data=True):
+        data['weight'] = float(data.get('weight', 1.0))
+
+    return grafo
 
 # Função para retornar a ordem do grafo
 def ordem_do_grafo(grafo):
@@ -24,17 +31,19 @@ def grau_do_vertice(grafo, vertice):
 def sequencia_de_graus(grafo):
     return [grau for _, grau in grafo.degree()]
 
-# Função para determinar a excentricidade de um vértice
+# Função para determinar a excentricidade de um vértice (considerando pesos)
 def excentricidade(grafo, vertice):
-    return max(nx.eccentricity(grafo, v=vertice).values())
+    excentricidades = nx.eccentricity(grafo, v=vertice)
+    return max(excentricidades.values())
 
-# Função para determinar o raio do grafo
+# Função para determinar o raio do grafo (considerando pesos)
 def raio_do_grafo(grafo):
     return nx.radius(grafo)
 
-# Função para determinar o diâmetro do grafo
+# Função para determinar o diâmetro do grafo (considerando pesos)
 def diametro_do_grafo(grafo):
     return nx.diameter(grafo)
+
 
 # Função para determinar o centro do grafo
 def centro_do_grafo(grafo):
@@ -45,11 +54,11 @@ def arvore_de_busca_em_largura(grafo, vertice_inicial):
     bfs_tree = nx.bfs_tree(grafo, source=vertice_inicial)
     return bfs_tree
 
-# Função para determinar distância e caminho mínimo
+# Função para determinar distância e caminho mínimo (considerando pesos)
 def distancia_e_caminho_minimo(grafo, origem, destino):
     try:
-        distancia = nx.shortest_path_length(grafo, source=origem, target=destino)
-        caminho_minimo = nx.shortest_path(grafo, source=origem, target=destino)
+        caminho_minimo = nx.shortest_path(grafo, source=origem, target=destino, weight='weight')
+        distancia = nx.shortest_path_length(grafo, source=origem, target=destino, weight='weight')
         return distancia, caminho_minimo
     except nx.NetworkXNoPath:
         return "Não há caminho entre os vértices."

@@ -1,4 +1,5 @@
 import grafo
+import networkx as nx
 
 def menu():
     print("\nOpções:")
@@ -26,7 +27,7 @@ if __name__ == "__main__":
 
         if escolha == '1':
             arquivo_grafo = input("Informe o caminho para o arquivo GraphML: ")
-            grafo_atual = grafo.carregar_grafo(arquivo_grafo)
+            grafo_atual = grafo.ler_grafo(arquivo_grafo)
             if grafo_atual:
                 print("Grafo carregado com sucesso.")
         elif escolha == '2':
