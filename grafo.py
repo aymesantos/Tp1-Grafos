@@ -29,12 +29,13 @@ def grau_do_vertice(grafo, vertice):
 
 # Função para retornar a sequência de graus do grafo
 def sequencia_de_graus(grafo):
-    return [grau for _, grau in grafo.degree()]
+    sequencia_graus = [grau for _, grau in grafo.degree()]
+    return sorted(sequencia_graus, reverse=True)
 
 # Função para determinar a excentricidade de um vértice (considerando pesos)
 def excentricidade(grafo, vertice):
-    excentricidades = nx.eccentricity(grafo, v=vertice)
-    return max(excentricidades.values())
+    excentricidades = nx.eccentricity(grafo)
+    return excentricidades[vertice]
 
 # Função para determinar o raio do grafo (considerando pesos)
 def raio_do_grafo(grafo):
