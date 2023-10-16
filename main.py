@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     while True:
         menu()
-        escolha = input("Escolha uma opção (ou 'q' para sair): ")
+        escolha = input("Escolha uma opção (ou '0' para sair): ")
 
         if escolha == '1':
             arquivo_grafo = input("Informe o caminho para o arquivo GraphML: ")
@@ -120,7 +120,7 @@ if __name__ == "__main__":
                 print(f"Centralidade de proximidade C de {vertice}: {centralidade_c}")
             else:
                 print("Grafo não carregado.")
-        elif escolha == 'q':
+        elif escolha == '0':
             break
         else:
             print("Opção inválida. Tente novamente.")
