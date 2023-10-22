@@ -3,7 +3,7 @@ import networkx as nx
 
 def menu():
     print("\nOpções:")
-    print("1. Carregar grafo")
+    print("1. Ler grafo")
     print("2. Ordem do grafo")
     print("3. Tamanho do grafo")
     print("4. Vizinhos de um vértice")
