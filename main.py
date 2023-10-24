@@ -96,9 +96,14 @@ if __name__ == "__main__":
         elif escolha == '11':
             if grafo_atual:
                 vertice_inicial = input("Informe o vértice inicial para a busca em largura: ")
-                bfs_tree = grafo.busca_em_largura_com_arvore(grafo_atual, vertice_inicial)
-                nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
-                print("Árvore de busca em largura gerada e salva em 'arvore_busca_largura.graphml'.")
+                sequencia_visitados, arestas_nao_arvore = grafo.arvore_de_busca_em_largura(grafo_atual, vertice_inicial)
+                print("Sequência de vértices visitados:", sequencia_visitados)
+                print("Arestas que não fazem parte da árvore em largura:", arestas_nao_arvore)
+                ##
+                #bfs_tree = grafo.arvore_de_busca_em_largura_e_graphml(grafo_atual, vertice_inicial, "saida.graphml")
+                #nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
+                #print("Árvore de busca em largura gerada e salva em 'arvore_busca_largura.graphml'.")
+                ##
             else:
                 print("Grafo não carregado.")
         elif escolha == '12':

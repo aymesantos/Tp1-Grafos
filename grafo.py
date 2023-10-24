@@ -52,8 +52,28 @@ def centro_do_grafo(grafo):
 
 # Função para determinar a árvore de busca em largura
 def arvore_de_busca_em_largura(grafo, vertice_inicial):
-    bfs_tree = nx.bfs_tree(grafo, source=vertice_inicial)
-    return bfs_tree
+    fila = [(vertice_inicial, None)]
+    visitados = set()
+    arvore = nx.Graph()
+    arestas_nao_arvore = []
+
+    while fila:
+        vertice, pai = fila.pop(0)
+        if vertice not in visitados:
+            visitados.add(vertice)
+            if pai is not None:
+                arvore.add_edge(pai, vertice)
+
+            for vizinho in grafo.neighbors(vertice):
+                if vizinho not in visitados:
+                    fila.append((vizinho, vertice))
+                elif pai is not None and vizinho != pai:
+                    arestas_nao_arvore.append((vertice, vizinho))
+
+    # Convertendo a árvore em formato GraphML
+    nx.write_graphml(arvore, "arvore_em_largura.graphml")
+
+    return list(visitados), arestas_nao_arvore
 
 # Função para determinar distância e caminho mínimo (considerando pesos)
 def distancia_e_caminho_minimo(grafo, origem, destino):
