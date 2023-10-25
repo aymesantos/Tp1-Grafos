@@ -45,7 +45,6 @@ def raio_do_grafo(grafo):
 def diametro_do_grafo(grafo):
     return nx.diameter(grafo)
 
-
 # Função para determinar o centro do grafo
 def centro_do_grafo(grafo):
     return nx.center(grafo)
