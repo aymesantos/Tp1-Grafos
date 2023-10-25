@@ -1,5 +1,5 @@
 import networkx as nx
-
+import os  
 
 # Função para ler um grafo a partir de um arquivo GraphML e definir pesos nas arestas
 def ler_grafo(file_path):
@@ -72,4 +72,6 @@ def centralidade_de_proximidade_C(grafo, vertice):
         return 0.0
     return (N - 1) / total_distancias
 
-
+#Para limpar o terminal Use 'cls' no Windows e 'clear' em sistemas Unix (Linux/Mac)
+def clear_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear') 

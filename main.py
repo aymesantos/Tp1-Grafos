@@ -29,76 +29,77 @@ if __name__ == "__main__":
         escolha = input(Fore.CYAN + "Escolha uma opção (ou " + Fore.RED + "'0'" + Fore.CYAN + " para sair): " + Fore.RESET)
 
         if escolha == '1':
-            arquivo_grafo = input("Informe o caminho para o arquivo GraphML: ")
+            arquivo_grafo = input(Fore.YELLOW + "Informe o caminho para o arquivo GraphML: " + Fore.RESET)
             grafo_atual = grafo.ler_grafo(arquivo_grafo)
             if grafo_atual:
                 print(Fore.GREEN + "Grafo carregado com sucesso." + Fore.RESET)
         elif escolha == '2':
+           
             if grafo_atual:
                 ordem = grafo.ordem_do_grafo(grafo_atual)
-                print("Ordem do grafo:", ordem)
+                print(Fore.MAGENTA + "Ordem do grafo:" + Fore.RESET, ordem)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '3':
             if grafo_atual:
                 tamanho = grafo.tamanho_do_grafo(grafo_atual)
-                print("Tamanho do grafo:", tamanho)
+                print(Fore.MAGENTA + "Tamanho do grafo:" + Fore.RESET, tamanho)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '4':
             if grafo_atual:
-                vertice = int(input("Informe o vértice: "))
-                if vertice < 1 or vertice > grafo.ordem_do_grafo(grafo_atual):
+                vertice = int(input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET))
+                if (vertice < 1 or vertice > grafo.ordem_do_grafo(grafo_atual)):
                     print(Fore.RED + "Erro: VERTICE INVALIDO" + Fore.RESET)
                 else:
                     vizinhos = grafo.vizinhos_do_vertice(grafo_atual, vertice)
-                    print("Vizinhos de", vertice, ":", vizinhos)
+                    print(Fore.MAGENTA + "Vizinhos de" + Fore.RESET, vertice, ":", vizinhos)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '5':
             if grafo_atual:
-                vertice = int(input("Informe o vértice: "))
-                if vertice < 1 or vertice > grafo.ordem_do_grafo(grafo_atual):
+                vertice = int(input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET))
+                if (vertice < 1 or vertice > grafo.ordem_do_grafo(grafo_atual)):
                     print(Fore.RED + "Erro: VERTICE INVALIDO" + Fore.RESET)
                 else:
                     grau = grafo.grau_do_vertice(grafo_atual, vertice)
-                    print("Grau de", vertice, ":", grau)
+                    print(Fore.MAGENTA + "Grau de" + Fore.RESET, vertice, ":", grau)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '6':
             if grafo_atual:
                 sequencia = grafo.sequencia_de_graus(grafo_atual)
-                print("Sequência de graus do grafo:", sequencia)
+                print(Fore.MAGENTA + "Sequência de graus do grafo:" + Fore.RESET, sequencia)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '7':
             if grafo_atual:
-                vertice = input("Informe o vértice: ")
+                vertice = input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET)
                 excentricidade = grafo.excentricidade(grafo_atual, vertice)
-                print("Excentricidade de", vertice, ":", excentricidade)
+                print(Fore.MAGENTA + "Excentricidade de" + Fore.RESET, vertice, ":", excentricidade)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '8':
             if grafo_atual:
                 raio = grafo.raio_do_grafo(grafo_atual)
-                print("Raio do grafo:", raio)
+                print(Fore.MAGENTA + "Raio do grafo:" + Fore.RESET, raio)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '9':
             if grafo_atual:
                 diametro = grafo.diametro_do_grafo(grafo_atual)
-                print("Diâmetro do grafo:", diametro)
+                print(Fore.MAGENTA + "Diâmetro do grafo:" + Fore.RESET, diametro)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '10':
             if grafo_atual:
                 centro = grafo.centro_do_grafo(grafo_atual)
-                print("Centro do grafo:", centro)
+                print(Fore.MAGENTA + "Centro do grafo:" + Fore.RESET, centro)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '11':
             if grafo_atual:
-                vertice_inicial = input("Informe o vértice inicial para a busca em largura: ")
+                vertice_inicial = input(Fore.YELLOW + "Informe o vértice inicial para a busca em largura: " + Fore.RESET)
                 bfs_tree = grafo.busca_em_largura_com_arvore(grafo_atual, vertice_inicial)
                 nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
                 print(Fore.GREEN + "Árvore de busca em largura gerada e salva em 'arvore_busca_largura.graphml'." + Fore.RESET)
@@ -106,21 +107,21 @@ if __name__ == "__main__":
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '12':
             if grafo_atual:
-                origem = input("Informe o vértice de origem: ")
-                destino = input("Informe o vértice de destino: ")
+                origem = input(Fore.YELLOW + "Informe o vértice de origem: " + Fore.RESET)
+                destino = input(Fore.YELLOW + "Informe o vértice de destino: " + Fore.RESET)
                 distancia, caminho_minimo = grafo.distancia_e_caminho_minimo(grafo_atual, origem, destino)
                 if distancia != float('inf'):
-                    print(f"Distância mínima de {origem} para {destino}: {distancia}")
-                    print(f"Caminho mínimo: {caminho_minimo}")
+                    print(Fore.MAGENTA + f"Distância mínima de {origem} para {destino}:" + Fore.RESET, distancia)
+                    print(Fore.MAGENTA + "Caminho mínimo:" + Fore.RESET, caminho_minimo)
                 else:
                     print(Fore.RED + "Não há caminho entre os vértices." + Fore.RESET)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '13':
             if grafo_atual:
-                vertice = input("Informe o vértice para calcular a centralidade de proximidade C: ")
+                vertice = input(Fore.YELLOW + "Informe o vértice para calcular a centralidade de proximidade C: " + Fore.RESET)
                 centralidade_c = grafo.centralidade_de_proximidade_C(grafo_atual, vertice)
-                print(f"Centralidade de proximidade C de {vertice}: {centralidade_c}")
+                print(Fore.CYAN + f"Centralidade de proximidade C de {vertice}:" + Fore.RESET, centralidade_c)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '0':
