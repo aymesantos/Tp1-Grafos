@@ -26,13 +26,14 @@ class Main:
         self.current_path = os.getcwd()
         self.ComprimentoJanela = 700
         self.AlturaJanela = 1125
-        self.icone_path = self.current_path + "/Imagens/icone.ico"
+        self.icone_path = self.current_path + "/Imagens/icone.png"
         self.main()
 
     def get_vertice(self, texto_pergunta):
         toplevel = tk.Toplevel(self.JanelaTk,bg='white')
         toplevel.resizable(False, False)
-        toplevel.iconbitmap(self.icone_path)
+        toplevel.iconphoto(True, tk.PhotoImage(file=self.icone_path))
+
         Fechou_Ou_Cancelou = [False]
 
         self.valor_vertice_escolhido = tk.StringVar()
@@ -87,7 +88,7 @@ class Main:
     def mostrar_resultado(self, texto):
         toplevel = tk.Toplevel(self.JanelaTk,bg='white')
         toplevel.resizable(False, False)
-        toplevel.iconbitmap(self.icone_path)
+        toplevel.iconphoto(True, tk.PhotoImage(file=self.icone_path))
 
         self.valor_vertice_escolhido = tk.StringVar()
 
@@ -363,7 +364,7 @@ class Main:
 
     def main(self):
         self.JanelaTk = tk.Tk()
-        self.JanelaTk.iconbitmap(self.icone_path)
+        self.JanelaTk.iconphoto(True, tk.PhotoImage(file=self.icone_path))
         #self.JanelaTk.resizable(False, False)
         self.JanelaTk.configure(bg="white")
         self.JanelaTk.title("Menu Grafo")
