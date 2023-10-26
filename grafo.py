@@ -88,12 +88,39 @@ def centro_do_grafo(grafo):
 
 
 # Função para determinar a árvore de busca em largura
-def arvore_de_busca_em_largura(grafo, vertice_inicial):
-    try:
-        bfs_tree = nx.bfs_tree(grafo, source=vertice_inicial)
-        return bfs_tree
-    except nx.NetworkXError:
-        return -1
+def arvore_de_busca_em_largura(grafo, v):
+    vertice_inicial = v
+    visitado = set()
+    fila = []
+    visitados_sequence = []  # para manter a sequência de vértices visitados
+    nao_arvore = []  # para armazenar as arestas que não fazem parte da árvore de busca
+    visitado.add(v)
+    fila.append(v)
+    visitados_sequence.append(v)
+
+    G = nx.Graph()  # Cria um gráfico vazio
+
+    while fila:
+        v = fila.pop(0)
+        for w in grafo[v]:
+            if w not in visitado:
+                explore(v, w)
+                fila.append(w)
+                visitado.add(w)
+                visitados_sequence.append(w)
+                G.add_edge(v, w)  # adiciona a aresta ao gráfico
+            else:
+                if (v, w) not in G.edges:
+                    nao_arvore.append((v, w))
+                    explore(v, w)
+
+    nx.write_graphml(G, "arvore_busca.graphml")  # salva o gráfico como um arquivo GraphML
+
+    return f"Sequência de vértices visitados na busca em largura do vértice {vertice_inicial}: {visitados_sequence}\nAresta(s) que não faz(em) parte da árvore de busca em largura: {nao_arvore}"
+
+
+def explore(v, w):
+    print(f"Explorando aresta entre {v} e {w}")
 
 # Função para determinar distância e caminho mínimo (considerando pesos)
 def distancia_e_caminho_minimo(grafo, origem, destino):
