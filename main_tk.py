@@ -120,14 +120,12 @@ class Main:
         toplevel.wait_window(toplevel)
 
     def tamanho_figura(self,Grafo):
-        # Get the number of nodes and edges in the graph
         num_nodes = len(Grafo.nodes())
         num_edges = len(Grafo.edges())
 
-        # Compute the figure size based on your desired formula
-        # You can adjust these constants to fit your specific needs
-        fig_width = max(3, num_nodes * 0.3)
-        fig_height = max(3, num_nodes * 0.4)
+
+        fig_width = max(3, num_nodes * 0.5)
+        fig_height = max(3, num_nodes * 0.5)
 
         return fig_width, fig_height
     def configurar_fonte(self, widget):
@@ -174,18 +172,28 @@ class Main:
     def is_bfs_graph(self, nome_arquivo):
         with open(nome_arquivo, 'r') as file:
             content = file.read()
-            return "graph edgedefault=\"directed\"" in content
+            return (
+                    "graph edgedefault=\"directed\"" in content or
+                    "<graph edgedefault=" in content
+            )
 
     def load_common_graph(self, nome_arquivo):
         G = nx.Graph()
         tree = ET.parse(nome_arquivo)
         root = tree.getroot()
 
-        for edge in root.iter('edge'):
-            source = int(edge.get('source'))
-            target = int(edge.get('target'))
-            weight = float(edge.get('weight', 1))
-            G.add_edge(source, target, weight=weight)
+        if root.tag == '{http://graphml.graphdrawing.org/xmlns}graph':
+            for edge in root.iter('edge'):
+                source = int(edge.get('source'))
+                target = int(edge.get('target'))
+                weight = float(edge.get('weight', 1))
+                G.add_edge(source, target, weight=weight)
+        elif root.tag == 'graphml':
+            for edge in root.iter('edge'):
+                source = int(edge.get('source'))
+                target = int(edge.get('target'))
+                weight = float(edge.get('weight', 1))
+                G.add_edge(source, target, weight=weight)
 
         return G
     def mostrar_erro(self, titulo, mensagem):
@@ -296,7 +304,7 @@ class Main:
             if(vertice != -1):
                 bfs_tree = grafo.arvore_de_busca_em_largura(self.grafo_atual, vertice)
                 #nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
-                self.colocar_grafo_arvore("arvore_busca_largura.graphml",vertice)
+                self.colocar_grafo_arvore("arvore_busca.graphml",vertice)
                 self.mostrar_resultado(bfs_tree)
 
 
