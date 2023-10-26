@@ -1,6 +1,7 @@
 import networkx as nx
 import matplotlib as plt
 import xml.etree.ElementTree as ET
+from colorama import Fore, Back, Style, init
 
 # Função para ler um grafo a partir de um arquivo GraphML e definir pesos nas arestas
 def ler_grafo(file_path):
@@ -62,6 +63,10 @@ def centro_do_grafo(grafo):
 
 # Função para determinar a árvore de busca em largura
 def arvore_de_busca_em_largura(grafo, v):
+    output = ""
+    output += f"\n\tBusca em Largura:\n"
+
+    vertice_inicial = v
     visitado = set()
     fila = []
     visitados_sequence = []  # para manter a sequência de vértices visitados
@@ -86,14 +91,19 @@ def arvore_de_busca_em_largura(grafo, v):
                     nao_arvore.append((v, w))
                     explore(v, w)
 
-    nx.write_graphml(G, "arvore_busca.graphml")  # salva o gráfico como um arquivo GraphML
+    nx.write_graphml(G, "arvore_busca_largura.graphml")  # salva o gráfico como um arquivo GraphML
 
-    print("Sequência de vértices visitados na busca em largura:", visitados_sequence)
-    print("Aresta(s) que não faz(em) parte da árvore de busca em largura:", nao_arvore)
+    #print("\n" + Fore.MAGENTA + "Sequência de vértices visitados na busca em largura:" + Fore.RESET + "", visitados_sequence)
+    #print("\n" + Fore.MAGENTA + "Aresta(s) que não faz(em) parte da árvore de busca em largura:" + Fore.RESET + "", nao_arvore)
 
+
+    output += "\n" + f"Sequência de vértices visitados na busca em largura: {visitados_sequence}\n"
+    output += "\n" + f"Aresta(s) que não faz(em) parte da árvore de busca em largura: {nao_arvore}\n"
+
+    return output
 
 def explore(v, w):
-    print(f"Explorando aresta entre {v} e {w}")
+    print(f"{Fore.YELLOW}\tExplorando aresta entre {Fore.RESET} {v} e {w}")
 
 
 # Função para determinar distância e caminho mínimo (considerando pesos)
