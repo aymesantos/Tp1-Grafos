@@ -26,7 +26,7 @@ class Main:
         self.current_path = os.getcwd()
         self.ComprimentoJanela = 700
         self.AlturaJanela = 1125
-        self.icone_path = self.current_path + "//Imagens//icone.ico"
+        self.icone_path = self.current_path + "/Imagens/icone.ico"
         self.main()
 
     def get_vertice(self, texto_pergunta):
@@ -213,7 +213,7 @@ class Main:
 
         if self.grafo_atual:
             self.status_label.config(text=f"Grafo Atual: {os.path.basename(nome_arquivo)}")
-            Image_Path = os.path.dirname(nome_arquivo) + "//Imagens//" + os.path.basename(nome_arquivo) + ".png"
+            Image_Path = os.path.dirname(nome_arquivo) + "/Imagens/" + os.path.basename(nome_arquivo) + ".png"
 
             self.JanelaTk.geometry(f"{self.AlturaJanela}x{self.ComprimentoJanela}")
             self.centralizar_tela(self.AlturaJanela,self.ComprimentoJanela)
@@ -249,7 +249,7 @@ class Main:
         img_label.image = grafo_imagem
 
     def colocar_grafo_arvore(self, image_file,vertice):
-        Image_Path = os.path.dirname(image_file) + "Imagens//" + os.path.basename(image_file) + ".png"
+        Image_Path = os.path.dirname(image_file) + "Imagens/" + os.path.basename(image_file) + ".png"
         self.converter_imagem(image_file, Image_Path)
         grafo_imagem = self.carrega_e_mostra_graph_imagem(Image_Path)
         self.image_frame_arvore = tk.Frame(self.image_frame2, bg="white")
