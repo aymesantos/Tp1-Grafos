@@ -1,16 +1,24 @@
 import networkx as nx
-
+import matplotlib as plt
+import xml.etree.ElementTree as ET
 
 # Função para ler um grafo a partir de um arquivo GraphML e definir pesos nas arestas
 def ler_grafo(file_path):
-    grafo = nx.read_graphml(file_path)
+    grafo = nx.Graph()
 
-    # Define pesos nas arestas com base nos atributos "weight"
-    for u, v, data in grafo.edges(data=True):
-        data['weight'] = float(data.get('weight', 1.0))
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+
+    for node in root.findall(".//node"):
+        grafo.add_node(node.get("id"))
+
+    for edge in root.findall(".//edge"):
+        source = edge.get("source")
+        target = edge.get("target")
+        weight = float(edge.get("weight"))
+        grafo.add_edge(source, target, weight=weight)  # Passando o peso da aresta
 
     return grafo
-
 # Função para retornar a ordem do grafo
 def ordem_do_grafo(grafo):
     return grafo.order()
@@ -39,11 +47,13 @@ def excentricidade(grafo, vertice):
 
 # Função para determinar o raio do grafo (considerando pesos)
 def raio_do_grafo(grafo):
-    return nx.radius(grafo)
+    radius = nx.radius(grafo, weight='weight')
+
+    return radius
 
 # Função para determinar o diâmetro do grafo (considerando pesos)
 def diametro_do_grafo(grafo):
-    return nx.diameter(grafo)
+    return nx.diameter(grafo,weight='weight')
 
 
 # Função para determinar o centro do grafo
@@ -51,29 +61,40 @@ def centro_do_grafo(grafo):
     return nx.center(grafo)
 
 # Função para determinar a árvore de busca em largura
-def arvore_de_busca_em_largura(grafo, vertice_inicial):
-    fila = [(vertice_inicial, None)]
-    visitados = set()
-    arvore = nx.Graph()
-    arestas_nao_arvore = []
+def arvore_de_busca_em_largura(grafo, v):
+    visitado = set()
+    fila = []
+    visitados_sequence = []  # para manter a sequência de vértices visitados
+    nao_arvore = []  # para armazenar as arestas que não fazem parte da árvore de busca
+    visitado.add(v)
+    fila.append(v)
+    visitados_sequence.append(v)
+
+    G = nx.Graph()  # Cria um gráfico vazio
 
     while fila:
-        vertice, pai = fila.pop(0)
-        if vertice not in visitados:
-            visitados.add(vertice)
-            if pai is not None:
-                arvore.add_edge(pai, vertice)
+        v = fila.pop(0)
+        for w in grafo[v]:
+            if w not in visitado:
+                explore(v, w)
+                fila.append(w)
+                visitado.add(w)
+                visitados_sequence.append(w)
+                G.add_edge(v, w)  # adiciona a aresta ao gráfico
+            else:
+                if (v, w) not in G.edges:
+                    nao_arvore.append((v, w))
+                    explore(v, w)
 
-            for vizinho in grafo.neighbors(vertice):
-                if vizinho not in visitados:
-                    fila.append((vizinho, vertice))
-                elif pai is not None and vizinho != pai:
-                    arestas_nao_arvore.append((vertice, vizinho))
+    nx.write_graphml(G, "arvore_busca.graphml")  # salva o gráfico como um arquivo GraphML
 
-    # Convertendo a árvore em formato GraphML
-    nx.write_graphml(arvore, "arvore_em_largura.graphml")
+    print("Sequência de vértices visitados na busca em largura:", visitados_sequence)
+    print("Aresta(s) que não faz(em) parte da árvore de busca em largura:", nao_arvore)
 
-    return list(visitados), arestas_nao_arvore
+
+def explore(v, w):
+    print(f"Explorando aresta entre {v} e {w}")
+
 
 # Função para determinar distância e caminho mínimo (considerando pesos)
 def distancia_e_caminho_minimo(grafo, origem, destino):
@@ -92,5 +113,4 @@ def centralidade_de_proximidade_C(grafo, vertice):
     if total_distancias == 0:
         return 0.0
     return (N - 1) / total_distancias
-
 
