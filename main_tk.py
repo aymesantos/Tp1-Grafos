@@ -294,11 +294,10 @@ class Main:
             vertice = self.get_vertice("Digite o vértice inicial:")
             if(vertice != -1):
                 bfs_tree = grafo.arvore_de_busca_em_largura(self.grafo_atual, vertice)
-
-
-
-                nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
+                #nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
                 self.colocar_grafo_arvore("arvore_busca_largura.graphml",vertice)
+                self.mostrar_resultado(bfs_tree)
+
 
         else:
             self.mostrar_erro("Erro", "Grafo não carregado")
