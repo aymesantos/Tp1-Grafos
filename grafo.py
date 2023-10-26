@@ -1,16 +1,27 @@
 import networkx as nx
-import os  
+import matplotlib as plt
+import xml.etree.ElementTree as ET
 
 # Função para ler um grafo a partir de um arquivo GraphML e definir pesos nas arestas
 def ler_grafo(file_path):
-    grafo = nx.read_graphml(file_path)
+    grafo = nx.Graph()
 
-    # Define pesos nas arestas com base nos atributos "weight"
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+
+    for node in root.findall(".//node"):
+        grafo.add_node(node.get("id"))
+
+    for edge in root.findall(".//edge"):
+        source = edge.get("source")
+        target = edge.get("target")
+        weight = int(edge.get("weight"))
+        grafo.add_edge(source, target, weight=weight)  # Passando o peso da aresta
     for u, v, data in grafo.edges(data=True):
-        data['weight'] = float(data.get('weight', 1.0))
-
+        if 'weight' in data:
+            peso = data['weight']
+            print(f'Aresta ({u}, {v}) tem peso {peso}')
     return grafo
-
 # Função para retornar a ordem do grafo
 def ordem_do_grafo(grafo):
     return grafo.order()
@@ -45,6 +56,7 @@ def raio_do_grafo(grafo):
 def diametro_do_grafo(grafo):
     return nx.diameter(grafo)
 
+
 # Função para determinar o centro do grafo
 def centro_do_grafo(grafo):
     return nx.center(grafo)
@@ -72,6 +84,4 @@ def centralidade_de_proximidade_C(grafo, vertice):
         return 0.0
     return (N - 1) / total_distancias
 
-#Para limpar o terminal Use 'cls' no Windows e 'clear' em sistemas Unix (Linux/Mac)
-def clear_terminal():
-    os.system('cls' if os.name == 'nt' else 'clear') 
+
