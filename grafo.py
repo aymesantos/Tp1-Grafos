@@ -1,4 +1,5 @@
 import networkx as nx
+import matplotlib as plt
 import xml.etree.ElementTree as ET
 
 # Função para ler um grafo a partir de um arquivo GraphML e definir pesos nas arestas
@@ -14,12 +15,9 @@ def ler_grafo(file_path):
     for edge in root.findall(".//edge"):
         source = edge.get("source")
         target = edge.get("target")
-        weight = int(edge.get("weight"))
+        weight = float(edge.get("weight"))
         grafo.add_edge(source, target, weight=weight)  # Passando o peso da aresta
-    for u, v, data in grafo.edges(data=True):
-        if 'weight' in data:
-            peso = data['weight']
-            print(f'Aresta ({u}, {v}) tem peso {peso}')
+
     return grafo
 # Função para retornar a ordem do grafo
 def ordem_do_grafo(grafo):
@@ -49,11 +47,13 @@ def excentricidade(grafo, vertice):
 
 # Função para determinar o raio do grafo (considerando pesos)
 def raio_do_grafo(grafo):
-    return nx.radius(grafo)
+    radius = nx.radius(grafo, weight='weight')
+
+    return radius
 
 # Função para determinar o diâmetro do grafo (considerando pesos)
 def diametro_do_grafo(grafo):
-    return nx.diameter(grafo)
+    return nx.diameter(grafo,weight='weight')
 
 
 # Função para determinar o centro do grafo
