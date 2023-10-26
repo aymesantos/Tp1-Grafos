@@ -1,5 +1,4 @@
 import networkx as nx
-import matplotlib as plt
 import xml.etree.ElementTree as ET
 
 # Função para ler um grafo a partir de um arquivo GraphML e definir pesos nas arestas
