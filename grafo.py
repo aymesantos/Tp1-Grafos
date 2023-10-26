@@ -66,6 +66,8 @@ def arvore_de_busca_em_largura(grafo, v):
     output = ""
     output += f"\n\tBusca em Largura:\n"
 
+    print(f"{Fore.GREEN}\n\tBusca em Largura:{Fore.RESET}\n")
+
     vertice_inicial = v
     visitado = set()
     fila = []
@@ -93,8 +95,8 @@ def arvore_de_busca_em_largura(grafo, v):
 
     nx.write_graphml(G, "arvore_busca_largura.graphml")  # salva o gráfico como um arquivo GraphML
 
-    #print("\n" + Fore.MAGENTA + "Sequência de vértices visitados na busca em largura:" + Fore.RESET + "", visitados_sequence)
-    #print("\n" + Fore.MAGENTA + "Aresta(s) que não faz(em) parte da árvore de busca em largura:" + Fore.RESET + "", nao_arvore)
+    print("\n" + Fore.MAGENTA + "Sequência de vértices visitados na busca em largura:" + Fore.RESET + "", visitados_sequence)
+    print("\n" + Fore.MAGENTA + "Aresta(s) que não faz(em) parte da árvore de busca em largura:" + Fore.RESET + "", nao_arvore)
 
 
     output += "\n" + f"Sequência de vértices visitados na busca em largura: {visitados_sequence}\n"
