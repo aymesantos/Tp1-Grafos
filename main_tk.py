@@ -5,14 +5,8 @@ import tkinter as tk
 import networkx as nx
 import xml.etree.ElementTree as ET
 from tkinter import filedialog, messagebox, Menu
-try:
-    import PIL
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", 'pillow'])
-try:
-    import matplotlib.pyplot as plt
-except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", 'matplotlib'])
+import PIL
+import matplotlib.pyplot as plt
 from PIL import Image, ImageTk
 import grafo
 

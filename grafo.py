@@ -1,6 +1,10 @@
 import networkx as nx
+import matplotlib as plt
 import xml.etree.ElementTree as ET
-
+import subprocess
+import sys
+import colorama
+from colorama import Fore, Back, Style, init
 # Função para ler um grafo a partir de um arquivo GraphML e definir pesos nas arestas
 def ler_grafo(file_path):
     grafo = nx.Graph()
@@ -8,17 +12,19 @@ def ler_grafo(file_path):
     tree = ET.parse(file_path)
     root = tree.getroot()
 
-    for node in root.findall(".//node"): #Lê vertices
+    for node in root.findall(".//node"):
         grafo.add_node(node.get("id"))
 
-    for edge in root.findall(".//edge"): #Lê arestas
+    for edge in root.findall(".//edge"):
         source = edge.get("source")
         target = edge.get("target")
-        weight = edge.get("weight")
+
+        weight = float(edge.get("weight"))
         if weight is not None:
-            grafo.add_edge(source, target, weight=float(weight))
+            grafo.add_edge(source, target, weight=weight)  # Passando o peso da aresta
         else:
-            grafo.add_edge(source, target,weight=1.0)
+            grafo.add_edge(source, target, weight=1.0)
+
 
     return grafo
 # Função para retornar a ordem do grafo
@@ -31,17 +37,11 @@ def tamanho_do_grafo(grafo):
 
 # Função para retornar os vizinhos de um vértice fornecido
 def vizinhos_do_vertice(grafo, vertice):
-    try:
-        return list(grafo.neighbors(vertice))
-    except nx.NetworkXError:
-        return -1
+    return list(grafo.neighbors(vertice))
 
 # Função para determinar o grau de um vértice fornecido
 def grau_do_vertice(grafo, vertice):
-    try:
-        return grafo.degree(vertice)
-    except nx.NetworkXError:
-            return -1
+    return grafo.degree(vertice)
 
 # Função para retornar a sequência de graus do grafo
 def sequencia_de_graus(grafo):
@@ -50,45 +50,42 @@ def sequencia_de_graus(grafo):
 
 # Função para determinar a excentricidade de um vértice (considerando pesos)
 def excentricidade(grafo, vertice):
-    try:
+    if any("weight" in grafo[u][v] for u, v in grafo.edges):
+        excentricidades = nx.eccentricity(grafo,weight='weight')
+    else:
         excentricidades = nx.eccentricity(grafo)
 
-        return excentricidades[vertice]
-    except nx.NetworkXError:
-        return "infinito"
+    return excentricidades[vertice]
 
 # Função para determinar o raio do grafo (considerando pesos)
 def raio_do_grafo(grafo):
-    try:
-        if any("weight" in grafo[u][v] for u, v in grafo.edges):
-            return nx.radius(grafo, weight='weight')
-        else:
-            return nx.radius(grafo)
-    except nx.NetworkXError:
-        return "infinito"
+    if any("weight" in grafo[u][v] for u, v in grafo.edges):
+        radius = nx.radius(grafo, weight='weight')
+    else:
+        radius = nx.radius(grafo)
 
+    return radius
 
 # Função para determinar o diâmetro do grafo (considerando pesos)
 def diametro_do_grafo(grafo):
-    try:
-        if any("weight" in grafo[u][v] for u, v in grafo.edges):
-            return nx.diameter(grafo, weight='weight')
-        else:
-            return nx.diameter(grafo)
-    except nx.NetworkXError:
-        return "infinito"
+    if any("weight" in grafo[u][v] for u, v in grafo.edges):
+        return nx.diameter(grafo,weight='weight')
+    else:
+        return nx.diameter(grafo)
+
 
 
 # Função para determinar o centro do grafo
 def centro_do_grafo(grafo):
-    try:
-        return nx.center(grafo)
-    except nx.NetworkXError:
-        return "infinito"
-
+    return nx.center(grafo)
 
 # Função para determinar a árvore de busca em largura
 def arvore_de_busca_em_largura(grafo, v):
+    output = ""
+    output += f"\n\tBusca em Largura:\n"
+
+    print(f"{Fore.GREEN}\n\tBusca em Largura:{Fore.RESET}\n")
+
     vertice_inicial = v
     visitado = set()
     fila = []
@@ -116,11 +113,18 @@ def arvore_de_busca_em_largura(grafo, v):
 
     nx.write_graphml(G, "arvore_busca.graphml")  # salva o gráfico como um arquivo GraphML
 
-    return f"Sequência de vértices visitados na busca em largura do vértice {vertice_inicial}: {visitados_sequence}\nAresta(s) que não faz(em) parte da árvore de busca em largura: {nao_arvore}"
+    print("\n" + Fore.MAGENTA + "Sequência de vértices visitados na busca em largura:" + Fore.RESET + "", visitados_sequence)
+    print("\n" + Fore.MAGENTA + "Aresta(s) que não faz(em) parte da árvore de busca em largura:" + Fore.RESET + "", nao_arvore)
 
+
+    output += "\n" + f"Sequência de vértices visitados na busca em largura: {visitados_sequence}\n"
+    output += "\n" + f"Aresta(s) que não faz(em) parte da árvore de busca em largura: {nao_arvore}\n"
+
+    return output
 
 def explore(v, w):
-    print(f"Explorando aresta entre {v} e {w}")
+    print(f"{Fore.YELLOW}\tExplorando aresta entre {Fore.RESET} {v} e {w}")
+
 
 # Função para determinar distância e caminho mínimo (considerando pesos)
 def distancia_e_caminho_minimo(grafo, origem, destino):
@@ -134,7 +138,7 @@ def distancia_e_caminho_minimo(grafo, origem, destino):
 
         return distancia, caminho_minimo
     except nx.NetworkXNoPath:
-        return None
+        return "Não há caminho entre os vértices."
 
 # Função para determinar a centralidade de proximidade C de um vértice
 def centralidade_de_proximidade_C(grafo, vertice):
@@ -144,3 +148,4 @@ def centralidade_de_proximidade_C(grafo, vertice):
     if total_distancias == 0:
         return 0.0
     return (N - 1) / total_distancias
+

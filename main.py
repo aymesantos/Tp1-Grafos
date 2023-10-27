@@ -1,5 +1,6 @@
 import grafo
 import networkx as nx
+import matplotlib.pyplot as plt
 from colorama import Fore, Back, Style, init
 
 init(autoreset=True)
@@ -100,9 +101,9 @@ if __name__ == "__main__":
         elif escolha == '11':
             if grafo_atual:
                 vertice_inicial = input(Fore.YELLOW + "Informe o vértice inicial para a busca em largura: " + Fore.RESET)
-                bfs_tree = grafo.busca_em_largura_com_arvore(grafo_atual, vertice_inicial)
-                nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
-                print(Fore.GREEN + "Árvore de busca em largura gerada e salva em 'arvore_busca_largura.graphml'." + Fore.RESET)
+
+                grafo.arvore_de_busca_em_largura(grafo_atual, vertice_inicial)
+                print(Fore.GREEN + "Árvore de busca em largura gerada e salva em 'arvore_busca.graphml'." + Fore.RESET)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '12':
