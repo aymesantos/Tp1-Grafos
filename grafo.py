@@ -93,7 +93,7 @@ def arvore_de_busca_em_largura(grafo, v):
                     nao_arvore.append((v, w))
                     explore(v, w)
 
-    nx.write_graphml(G, "arvore_busca_largura.graphml")  # salva o gráfico como um arquivo GraphML
+    nx.write_graphml(G, "arvore_busca.graphml")  # salva o gráfico como um arquivo GraphML
 
     print("\n" + Fore.MAGENTA + "Sequência de vértices visitados na busca em largura:" + Fore.RESET + "", visitados_sequence)
     print("\n" + Fore.MAGENTA + "Aresta(s) que não faz(em) parte da árvore de busca em largura:" + Fore.RESET + "", nao_arvore)

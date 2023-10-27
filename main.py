@@ -103,7 +103,7 @@ if __name__ == "__main__":
                 vertice_inicial = input(Fore.YELLOW + "Informe o vértice inicial para a busca em largura: " + Fore.RESET)
 
                 grafo.arvore_de_busca_em_largura(grafo_atual, vertice_inicial)
-                print(Fore.GREEN + "Árvore de busca em largura gerada e salva em 'arvore_busca_largura.graphml'." + Fore.RESET)
+                print(Fore.GREEN + "Árvore de busca em largura gerada e salva em 'arvore_busca.graphml'." + Fore.RESET)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '12':
