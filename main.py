@@ -63,7 +63,7 @@ if __name__ == "__main__":
                 if (vertice > grafo.ordem_do_grafo(grafo_atual)):
                     print(Fore.RED + "Erro: VERTICE INVALIDO" + Fore.RESET)
                 else:
-                     grau = grafo.grau_do_vertice(grafo_atual, str(vertice))
+                    grau = grafo.grau_do_vertice(grafo_atual, str(vertice))
                     print(Fore.MAGENTA + "Grau de" + Fore.RESET, vertice, ":", grau)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
