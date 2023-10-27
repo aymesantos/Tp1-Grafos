@@ -76,7 +76,7 @@ if __name__ == "__main__":
         elif escolha == '7':
             if grafo_atual:
                 vertice = input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET)
-                excentricidade = grafo.excentricidade(grafo_atual, vertice)
+                excentricidade = grafo.excentricidade(grafo_atual, str(vertice)
                 print(Fore.MAGENTA + "Excentricidade de" + Fore.RESET, vertice, ":", excentricidade)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
@@ -102,7 +102,7 @@ if __name__ == "__main__":
             if grafo_atual:
                 vertice_inicial = input(Fore.YELLOW + "Informe o vértice inicial para a busca em largura: " + Fore.RESET)
 
-                grafo.arvore_de_busca_em_largura(grafo_atual, vertice_inicial)
+                grafo.arvore_de_busca_em_largura(grafo_atual, str(vertice_inicial))
                 print(Fore.GREEN + "Árvore de busca em largura gerada e salva em 'arvore_busca.graphml'." + Fore.RESET)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
@@ -110,7 +110,7 @@ if __name__ == "__main__":
             if grafo_atual:
                 origem = input(Fore.YELLOW + "Informe o vértice de origem: " + Fore.RESET)
                 destino = input(Fore.YELLOW + "Informe o vértice de destino: " + Fore.RESET)
-                distancia, caminho_minimo = grafo.distancia_e_caminho_minimo(grafo_atual, origem, destino)
+                distancia, caminho_minimo = grafo.distancia_e_caminho_minimo(grafo_atual, str(origem), str(destino))
                 if distancia != float('inf'):
                     print(Fore.MAGENTA + f"Distância mínima de {origem} para {destino}:" + Fore.RESET, distancia)
                     print(Fore.MAGENTA + "Caminho mínimo:" + Fore.RESET, caminho_minimo)
@@ -121,7 +121,7 @@ if __name__ == "__main__":
         elif escolha == '13':
             if grafo_atual:
                 vertice = input(Fore.YELLOW + "Informe o vértice para calcular a centralidade de proximidade C: " + Fore.RESET)
-                centralidade_c = grafo.centralidade_de_proximidade_C(grafo_atual, vertice)
+                centralidade_c = grafo.centralidade_de_proximidade_C(grafo_atual, str(vertice))
                 print(Fore.CYAN + f"Centralidade de proximidade C de {vertice}:" + Fore.RESET, centralidade_c)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
