@@ -8,10 +8,10 @@ def ler_grafo(file_path):
     tree = ET.parse(file_path)
     root = tree.getroot()
 
-    for node in root.findall(".//node"):
+    for node in root.findall(".//node"): #Lê vertices
         grafo.add_node(node.get("id"))
 
-    for edge in root.findall(".//edge"):
+    for edge in root.findall(".//edge"): #Lê arestas
         source = edge.get("source")
         target = edge.get("target")
         weight = edge.get("weight")
@@ -74,7 +74,7 @@ def diametro_do_grafo(grafo):
         if any("weight" in grafo[u][v] for u, v in grafo.edges):
             return nx.diameter(grafo, weight='weight')
         else:
-            return nx.radius(grafo)
+            return nx.diameter(grafo)
     except nx.NetworkXError:
         return "infinito"
 
@@ -125,8 +125,13 @@ def explore(v, w):
 # Função para determinar distância e caminho mínimo (considerando pesos)
 def distancia_e_caminho_minimo(grafo, origem, destino):
     try:
-        caminho_minimo = nx.shortest_path(grafo, source=origem, target=destino, weight='weight')
-        distancia = nx.shortest_path_length(grafo, source=origem, target=destino, weight='weight')
+        if any("weight" in grafo[u][v] for u, v in grafo.edges):
+            caminho_minimo = nx.shortest_path(grafo, source=origem, target=destino, weight='weight')
+            distancia = nx.shortest_path_length(grafo, source=origem, target=destino, weight='weight')
+        else:
+            caminho_minimo = nx.shortest_path(grafo, source=origem, target=destino)
+            distancia = nx.shortest_path_length(grafo, source=origem, target=destino)
+
         return distancia, caminho_minimo
     except nx.NetworkXNoPath:
         return None
