@@ -76,7 +76,7 @@ if __name__ == "__main__":
         elif escolha == '7':
             if grafo_atual:
                 vertice = input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET)
-                excentricidade = grafo.excentricidade(grafo_atual, str(vertice)
+                excentricidade = grafo.excentricidade(grafo_atual, str(vertice))
                 print(Fore.MAGENTA + "Excentricidade de" + Fore.RESET, vertice, ":", excentricidade)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
