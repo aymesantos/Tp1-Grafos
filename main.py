@@ -50,20 +50,20 @@ if __name__ == "__main__":
         elif escolha == '4':
             if grafo_atual:
                 vertice = int(input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET))
-                if (vertice < 1 or vertice > grafo.ordem_do_grafo(grafo_atual)):
+                if (vertice > grafo.ordem_do_grafo(grafo_atual)):
                     print(Fore.RED + "Erro: VERTICE INVALIDO" + Fore.RESET)
                 else:
-                    vizinhos = grafo.vizinhos_do_vertice(grafo_atual, vertice)
+                    vizinhos = grafo.vizinhos_do_vertice(grafo_atual, str(vertice))
                     print(Fore.MAGENTA + "Vizinhos de" + Fore.RESET, vertice, ":", vizinhos)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '5':
             if grafo_atual:
                 vertice = int(input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET))
-                if (vertice < 1 or vertice > grafo.ordem_do_grafo(grafo_atual)):
+                if (vertice > grafo.ordem_do_grafo(grafo_atual)):
                     print(Fore.RED + "Erro: VERTICE INVALIDO" + Fore.RESET)
                 else:
-                    grau = grafo.grau_do_vertice(grafo_atual, vertice)
+                     grau = grafo.grau_do_vertice(grafo_atual, str(vertice))
                     print(Fore.MAGENTA + "Grau de" + Fore.RESET, vertice, ":", grau)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
