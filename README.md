@@ -11,7 +11,9 @@ Para usar a interface grafica do trabalho presente no arquivo main.py vai ser ne
 <b> pip install pillow  </b>
 
 A interface grafica utiliza da biblioteca tkinter, que geralmente é nativa do python, porém caso esteja utilizando Linux e o programa acusar erro, talvez seja necessário instalar o tkinter:
+
 <b> sudo apt-get install python-tk  </b>
 
 O menu feito no terminal, main.py, requer a biblioteca colorama, vai ser necessário a sua instalação com o seguinte comando:
+
 <b> pip install colorama </b>
