@@ -20,8 +20,9 @@ def menu():
     print(Fore.CYAN + "[11]. " + Fore.RESET + "Busca em Largura e Árvore de Largura (em GraphML)")
     print(Fore.CYAN + "[12]. " + Fore.RESET + "Distância e Caminho Mínimo")
     print(Fore.CYAN + "[13]. " + Fore.RESET + "Centralidade de Proximidade C")
+    print(Fore.CYAN + "[14]. " + Fore.RESET + "Árvore Geradora Mínima (em GraphML)")
     print(Fore.RED + "0. " + Fore.RESET + "Sair")
-
+  
 if __name__ == "__main__":
     grafo_atual = None
 
@@ -123,6 +124,13 @@ if __name__ == "__main__":
                 vertice = input(Fore.YELLOW + "Informe o vértice para calcular a centralidade de proximidade C: " + Fore.RESET)
                 centralidade_c = grafo.centralidade_de_proximidade_C(grafo_atual, str(vertice))
                 print(Fore.CYAN + f"Centralidade de proximidade C de {vertice}:" + Fore.RESET, centralidade_c)
+            else:
+                print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+        elif escolha == '14':
+            if grafo_atual:
+                peso_total_arvore_geradora = grafo.arvore_geradora_minima(grafo_atual)
+                print(Fore.MAGENTA + f"Peso total da árvore geradora mínima: {peso_total_arvore_geradora}" + Fore.RESET)
+                print(Fore.GREEN + "Árvore geradora mínima gerada e salva em 'arvore_geradora_minima.graphml'." + Fore.RESET)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '0':

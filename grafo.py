@@ -5,6 +5,7 @@ import subprocess
 import sys
 import colorama
 from colorama import Fore, Back, Style, init
+
 # Função para ler um grafo a partir de um arquivo GraphML e definir pesos nas arestas
 def ler_grafo(file_path):
     grafo = nx.Graph()
@@ -149,3 +150,17 @@ def centralidade_de_proximidade_C(grafo, vertice):
         return 0.0
     return (N - 1) / total_distancias
 
+#Funções Adicionais
+
+# Função para determinar a árvore geradora mínima e salvar no formato GraphML
+def arvore_geradora_minima(grafo):
+    # Use o algoritmo de Kruskal para encontrar a árvore geradora mínima
+    arvore_geradora = nx.minimum_spanning_tree(grafo, algorithm='kruskal', weight='weight')
+
+    # Calcule o peso total da árvore geradora mínima
+    peso_total = sum(grafo[u][v]['weight'] for u, v in arvore_geradora.edges())
+
+    # Salve a árvore geradora mínima no formato GraphML
+    nx.write_graphml(arvore_geradora, "arvore_geradora_minima.graphml")
+
+    return peso_total
