@@ -251,12 +251,31 @@ class Main:
 
         img_label.image = grafo_imagem
 
-    def colocar_grafo_arvore(self, image_file,vertice):
+    def colocar_grafo_arvore_busca(self, image_file,vertice):
         Image_Path = os.path.dirname(image_file) + "Imagens/" + os.path.basename(image_file) + ".png"
         self.converter_imagem(image_file, Image_Path)
         grafo_imagem = self.carrega_e_mostra_graph_imagem(Image_Path)
         self.image_frame_arvore = tk.Frame(self.image_frame2, bg="white")
         self.label_arvore = tk.Label(self.image_frame_arvore,bg='white',text=f"Árvore de Busca Resultante para o Vértice {vertice}: ")
+        self.configurar_fonte(self.label_arvore)
+        self.label_arvore.grid(row=0,column=0,padx=0,pady=0,sticky="nsew")
+        self.image_frame_arvore.grid(row=0, column=1, padx=350, pady=0, sticky="nsew")
+
+        img_label = tk.Label(self.image_frame_arvore, image=grafo_imagem, bg="white")
+        img_label.grid(row=1, column=0, padx=0, pady=0, sticky="nsew")
+
+        img_label.image = grafo_imagem
+    def vertices_estaveis_grafo(self):
+        if self.grafo_atual:
+                vertices_estaveis = grafo.conjunto_estavel_vertices(self.grafo_atual)
+
+                self.mostrar_resultado("Conjunto de vértices estáveis no grafo: " + str(vertices_estaveis))
+    def colocar_grafo_arvore_geradora_minima(self, image_file):
+        Image_Path = os.path.dirname(image_file) + "Imagens/" + os.path.basename(image_file) + ".png"
+        self.converter_imagem(image_file, Image_Path)
+        grafo_imagem = self.carrega_e_mostra_graph_imagem(Image_Path)
+        self.image_frame_arvore = tk.Frame(self.image_frame2, bg="white")
+        self.label_arvore = tk.Label(self.image_frame_arvore,bg='white',text=f"Árvore Geradora Mínima ")
         self.configurar_fonte(self.label_arvore)
         self.label_arvore.grid(row=0,column=0,padx=0,pady=0,sticky="nsew")
         self.image_frame_arvore.grid(row=0, column=1, padx=350, pady=0, sticky="nsew")
@@ -298,8 +317,20 @@ class Main:
             if(vertice != -1):
                 bfs_tree = grafo.arvore_de_busca_em_largura(self.grafo_atual, vertice)
                 #nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
-                self.colocar_grafo_arvore("arvore_busca.graphml",vertice)
+                self.colocar_grafo_arvore_busca("arvore_busca.graphml",vertice)
                 self.mostrar_resultado(bfs_tree)
+
+
+        else:
+            self.mostrar_erro("Erro", "Grafo não carregado")
+
+    def arvore_geradora_minima(self):
+
+        if self.grafo_atual:
+                bfs_tree = grafo.arvore_geradora_minima(self.grafo_atual)
+                #nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
+                self.colocar_grafo_arvore_geradora_minima("arvore_geradora_minima.graphml")
+                #self.mostrar_resultado(bfs_tree)
 
 
         else:
@@ -394,6 +425,8 @@ class Main:
         excentricidade_vertice_button = tk.Button(self.frame_botao, text="Excentricidade de um Vértice",command=self.excentricidade_vertice)
         distancia_caminho_minimo_button = tk.Button(self.frame_botao,text="Distância e Caminho Mínimo",command=self.distancia_e_caminho_minimo)
         centralidade_proximidade_c_button =tk.Button(self.frame_botao,text="Centralidade de Proximidade C",command=self.centralidade_de_proximidade_C)
+        arvore_geradora_minima_button = tk.Button(self.frame_botao, text="Árvore Geradora Mínima", command=self.arvore_geradora_minima)
+        conjunto_estavel_vertices_button = tk.Button(self.frame_botao, text="Conjunto Estável de Vértices", command=self.vertices_estaveis_grafo)
 
         self.configurar_fonte(ordem_button)
         self.configurar_fonte(tamanho_button)
@@ -402,6 +435,8 @@ class Main:
         self.configurar_fonte(excentricidade_vertice_button)
         self.configurar_fonte(distancia_caminho_minimo_button)
         self.configurar_fonte(centralidade_proximidade_c_button)
+        self.configurar_fonte(arvore_geradora_minima_button)
+        self.configurar_fonte(conjunto_estavel_vertices_button)
 
         ordem_button.config(width=self.button_width, height=self.button_height, bg="white")
         tamanho_button.config(width=self.button_width, height=self.button_height, bg="white")
@@ -412,6 +447,9 @@ class Main:
         excentricidade_vertice_button.config(width=self.button_width,height=self.button_height,bg="white")
         distancia_caminho_minimo_button.config(width=self.button_width,height=self.button_height,bg="white")
         centralidade_proximidade_c_button.config(width=self.button_width,height=self.button_height,bg="white")
+        arvore_geradora_minima_button.config(width=self.button_width,height=self.button_height,bg="white")
+        conjunto_estavel_vertices_button.config(width=self.button_width,height=self.button_height,bg="white")
+
 
         ordem_button.grid(row=1, column=1, padx=10, pady=10, sticky='w')
         tamanho_button.grid(row=1, column=0, padx=10, pady=10, sticky='e')
@@ -434,6 +472,10 @@ class Main:
         distancia_caminho_minimo_button.bind("<Leave>",self.button_leave)
         centralidade_proximidade_c_button.bind("<Enter>",self.button_hover)
         centralidade_proximidade_c_button.bind("<Leave>",self.button_leave)
+        arvore_geradora_minima_button.bind("<Enter>", self.button_hover)
+        arvore_geradora_minima_button.bind("<Leave>", self.button_leave)
+        conjunto_estavel_vertices_button.bind("<Enter>", self.button_hover)
+        conjunto_estavel_vertices_button.bind("<Leave>", self.button_leave)
 
 
         centro_button = tk.Button(self.frame_botao, text="Centro do Grafo", command=self.mostrar_centro_do_grafo)
@@ -461,6 +503,8 @@ class Main:
         excentricidade_vertice_button.grid(row=3,column=2,padx=10,pady=10)
         distancia_caminho_minimo_button.grid(row=1,column=3,padx=10,pady=10)
         centralidade_proximidade_c_button.grid(row=2,column=3,padx=10,pady=10)
+        arvore_geradora_minima_button.grid(row=4,column=1,padx=10,pady=10)
+        conjunto_estavel_vertices_button.grid(row=4, column=0, padx=10, pady=10)
         centro_button.bind("<Enter>", self.button_hover)
         centro_button.bind("<Leave>", self.button_leave)
         raio_button.bind("<Enter>", self.button_hover)

@@ -21,6 +21,7 @@ def menu():
     print(Fore.CYAN + "[12]. " + Fore.RESET + "Distância e Caminho Mínimo")
     print(Fore.CYAN + "[13]. " + Fore.RESET + "Centralidade de Proximidade C")
     print(Fore.CYAN + "[14]. " + Fore.RESET + "Árvore Geradora Mínima (em GraphML)")
+    print(Fore.CYAN + "[15]. " + Fore.RESET + "Conjunto de Vértices Estáveis no grafo (Heurística Gulosa)")
     print(Fore.RED + "0. " + Fore.RESET + "Sair")
   
 if __name__ == "__main__":
@@ -126,6 +127,7 @@ if __name__ == "__main__":
                 print(Fore.CYAN + f"Centralidade de proximidade C de {vertice}:" + Fore.RESET, centralidade_c)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+
         elif escolha == '14':
             if grafo_atual:
                 peso_total_arvore_geradora = grafo.arvore_geradora_minima(grafo_atual)
@@ -133,6 +135,13 @@ if __name__ == "__main__":
                 print(Fore.GREEN + "Árvore geradora mínima gerada e salva em 'arvore_geradora_minima.graphml'." + Fore.RESET)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+
+
+        elif escolha == '15':
+            if grafo_atual:
+                resultado = grafo.conjunto_estavel_vertices(grafo_atual)
+                print(Fore.CYAN +"Conjunto de vértices estáveis no grafo: " + str(resultado))
+
         elif escolha == '0':
             break
         else:
