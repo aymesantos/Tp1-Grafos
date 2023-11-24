@@ -141,6 +141,8 @@ if __name__ == "__main__":
             if grafo_atual:
                 resultado = grafo.conjunto_estavel_vertices(grafo_atual)
                 print(Fore.CYAN +"Conjunto de vértices estáveis no grafo: " + str(resultado))
+            else:
+                print(Fore.RED + "Grafo não carregado." + Fore.RESET)
 
         elif escolha == '0':
             break
