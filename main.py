@@ -1,5 +1,6 @@
 import grafo
 import networkx as nx
+import matplotlib.pyplot as plt
 from colorama import Fore, Back, Style, init
 
 init(autoreset=True)
@@ -19,8 +20,11 @@ def menu():
     print(Fore.CYAN + "[11]. " + Fore.RESET + "Busca em Largura e Árvore de Largura (em GraphML)")
     print(Fore.CYAN + "[12]. " + Fore.RESET + "Distância e Caminho Mínimo")
     print(Fore.CYAN + "[13]. " + Fore.RESET + "Centralidade de Proximidade C")
+    print(Fore.CYAN + "[14]. " + Fore.RESET + "Árvore Geradora Mínima (em GraphML)")
+    print(Fore.CYAN + "[15]. " + Fore.RESET + "Conjunto de Vértices Estáveis no grafo (Heurística Gulosa)")
+    print(Fore.CYAN + "[16]. " + Fore.RESET + "Presença de ciclo no grafo")
     print(Fore.RED + "0. " + Fore.RESET + "Sair")
-
+  
 if __name__ == "__main__":
     grafo_atual = None
 
@@ -49,20 +53,20 @@ if __name__ == "__main__":
         elif escolha == '4':
             if grafo_atual:
                 vertice = int(input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET))
-                if (vertice < 1 or vertice > grafo.ordem_do_grafo(grafo_atual)):
+                if (vertice > grafo.ordem_do_grafo(grafo_atual)):
                     print(Fore.RED + "Erro: VERTICE INVALIDO" + Fore.RESET)
                 else:
-                    vizinhos = grafo.vizinhos_do_vertice(grafo_atual, vertice)
+                    vizinhos = grafo.vizinhos_do_vertice(grafo_atual, str(vertice))
                     print(Fore.MAGENTA + "Vizinhos de" + Fore.RESET, vertice, ":", vizinhos)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '5':
             if grafo_atual:
                 vertice = int(input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET))
-                if (vertice < 1 or vertice > grafo.ordem_do_grafo(grafo_atual)):
+                if (vertice > grafo.ordem_do_grafo(grafo_atual)):
                     print(Fore.RED + "Erro: VERTICE INVALIDO" + Fore.RESET)
                 else:
-                    grau = grafo.grau_do_vertice(grafo_atual, vertice)
+                    grau = grafo.grau_do_vertice(grafo_atual, str(vertice))
                     print(Fore.MAGENTA + "Grau de" + Fore.RESET, vertice, ":", grau)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
@@ -75,7 +79,7 @@ if __name__ == "__main__":
         elif escolha == '7':
             if grafo_atual:
                 vertice = input(Fore.YELLOW + "Informe o vértice: " + Fore.RESET)
-                excentricidade = grafo.excentricidade(grafo_atual, vertice)
+                excentricidade = grafo.excentricidade(grafo_atual, str(vertice))
                 print(Fore.MAGENTA + "Excentricidade de" + Fore.RESET, vertice, ":", excentricidade)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
@@ -100,16 +104,16 @@ if __name__ == "__main__":
         elif escolha == '11':
             if grafo_atual:
                 vertice_inicial = input(Fore.YELLOW + "Informe o vértice inicial para a busca em largura: " + Fore.RESET)
-                bfs_tree = grafo.busca_em_largura_com_arvore(grafo_atual, vertice_inicial)
-                nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
-                print(Fore.GREEN + "Árvore de busca em largura gerada e salva em 'arvore_busca_largura.graphml'." + Fore.RESET)
+
+                grafo.arvore_de_busca_em_largura(grafo_atual, str(vertice_inicial))
+                print(Fore.GREEN + "Árvore de busca em largura gerada e salva em 'arvore_busca.graphml'." + Fore.RESET)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '12':
             if grafo_atual:
                 origem = input(Fore.YELLOW + "Informe o vértice de origem: " + Fore.RESET)
                 destino = input(Fore.YELLOW + "Informe o vértice de destino: " + Fore.RESET)
-                distancia, caminho_minimo = grafo.distancia_e_caminho_minimo(grafo_atual, origem, destino)
+                distancia, caminho_minimo = grafo.distancia_e_caminho_minimo(grafo_atual, str(origem), str(destino))
                 if distancia != float('inf'):
                     print(Fore.MAGENTA + f"Distância mínima de {origem} para {destino}:" + Fore.RESET, distancia)
                     print(Fore.MAGENTA + "Caminho mínimo:" + Fore.RESET, caminho_minimo)
@@ -120,10 +124,35 @@ if __name__ == "__main__":
         elif escolha == '13':
             if grafo_atual:
                 vertice = input(Fore.YELLOW + "Informe o vértice para calcular a centralidade de proximidade C: " + Fore.RESET)
-                centralidade_c = grafo.centralidade_de_proximidade_C(grafo_atual, vertice)
+                centralidade_c = grafo.centralidade_de_proximidade_C(grafo_atual, str(vertice))
                 print(Fore.CYAN + f"Centralidade de proximidade C de {vertice}:" + Fore.RESET, centralidade_c)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+
+        elif escolha == '14':
+            if grafo_atual:
+                peso_total_arvore_geradora = grafo.arvore_geradora_minima(grafo_atual)
+                print(Fore.MAGENTA + f"Peso total da árvore geradora mínima: {peso_total_arvore_geradora}" + Fore.RESET)
+                print(Fore.GREEN + "Árvore geradora mínima gerada e salva em 'arvore_geradora_minima.graphml'." + Fore.RESET)
+            else:
+                print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+
+
+        elif escolha == '15':
+            if grafo_atual:
+                resultado = grafo.conjunto_estavel_vertices(grafo_atual)
+                print(Fore.CYAN +"Conjunto de vértices estáveis no grafo: " + str(resultado))
+            else:
+                print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+        elif escolha == '16':
+            if grafo_atual:
+                if tem_ciclo(grafo_atual):
+                    print(Fore.RED + "O grafo possui ciclo." + Fore.RESET)
+                else:
+                    print(Fore.GREEN + "O grafo não possui ciclo." + Fore.RESET)
+            else:
+                print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+
         elif escolha == '0':
             break
         else:
