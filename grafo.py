@@ -171,8 +171,6 @@ def conjunto_estavel_vertices(graph):
     copia_grafo = graph.copy()
     while copia_grafo.nodes:
         no_grafo = max(copia_grafo, key=copia_grafo.degree)
-
-        # Adiciona o vértice escolhido ao conjunto estável
         conjunto_estavel.add(no_grafo)
         #print(f"Adicionado nó {no_grafo} ao conjunto estável")
         vizinhos = set(copia_grafo.neighbors(no_grafo))
