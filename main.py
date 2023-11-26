@@ -22,6 +22,7 @@ def menu():
     print(Fore.CYAN + "[13]. " + Fore.RESET + "Centralidade de Proximidade C")
     print(Fore.CYAN + "[14]. " + Fore.RESET + "Árvore Geradora Mínima (em GraphML)")
     print(Fore.CYAN + "[15]. " + Fore.RESET + "Conjunto de Vértices Estáveis no grafo (Heurística Gulosa)")
+    print(Fore.CYAN + "[16]. " + Fore.RESET + "Presença de ciclo no grafo")
     print(Fore.RED + "0. " + Fore.RESET + "Sair")
   
 if __name__ == "__main__":
@@ -143,6 +144,15 @@ if __name__ == "__main__":
                 print(Fore.CYAN +"Conjunto de vértices estáveis no grafo: " + str(resultado))
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+        elif escolha == '16':
+            if grafo_atual:
+                if tem_ciclo(grafo_atual):
+                    print(Fore.RED + "O grafo possui ciclo." + Fore.RESET)
+                else:
+                    print(Fore.GREEN + "O grafo não possui ciclo." + Fore.RESET)
+            else:
+                print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+
 
         elif escolha == '0':
             break

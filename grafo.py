@@ -181,3 +181,26 @@ def conjunto_estavel_vertices(graph):
     return conjunto_estavel
 
 
+def tem_ciclo(grafo):
+    visitados = set()
+
+    def dfs(v, VAR):
+        visitados.add(v)
+
+        for vizinho in grafo[v]:
+            if vizinho not in visitados:
+                if dfs(vizinho, v):
+                    return True
+            elif VAR != vizinho:
+                return True
+
+        return False
+
+    for vertice in grafo.nodes:
+        if vertice not in visitados:
+            if dfs(vertice, None):
+                return True
+
+    return False
+
+
