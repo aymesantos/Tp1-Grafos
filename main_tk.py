@@ -278,6 +278,22 @@ class Main:
                 self.mostrar_resultado("O grafo possui ciclo")
             else:
                 self.mostrar_resultado("O grafo não possui ciclo")
+
+    def menor_ciclo_grafo(self):
+        if self.grafo_atual:
+            try:
+                menor_ciclo,somatorio_pesos = grafo.encontrar_menor_ciclo(self.grafo_atual)
+            except ValueError as erro:
+                return self.mostrar_erro("Erro!", str(erro))
+
+            Texto_Geral = "Menor Ciclo:\n"
+
+            for u, v in menor_ciclo:
+                peso = self.grafo_atual[u][v]['weight']
+                Texto_Geral = Texto_Geral + str(u) + " -> " + str(v) + " Peso : " + str(peso) + "\n"
+            Texto_Geral = Texto_Geral + "\nSoma do peso das arestas: " + str(somatorio_pesos)
+            self.mostrar_resultado(Texto_Geral)
+
     def colocar_grafo_arvore_geradora_minima(self, image_file):
         Image_Path = os.path.dirname(image_file) + "Imagens/" + os.path.basename(image_file) + ".png"
         self.converter_imagem(image_file, Image_Path)
@@ -435,7 +451,9 @@ class Main:
         centralidade_proximidade_c_button =tk.Button(self.frame_botao,text="Centralidade de Proximidade C",command=self.centralidade_de_proximidade_C)
         arvore_geradora_minima_button = tk.Button(self.frame_botao, text="Árvore Geradora Mínima", command=self.arvore_geradora_minima)
         conjunto_estavel_vertices_button = tk.Button(self.frame_botao, text="Conjunto Estável de Vértices", command=self.vertices_estaveis_grafo)
-        tem_ciclo_button = tk.Button(self.frame_botao, text="Presença de ciclo no grafo", command=self.tem_ciclo_grafo)
+        tem_ciclo_button = tk.Button(self.frame_botao, text="Presença de Ciclo no Grafo", command=self.tem_ciclo_grafo)
+        menor_ciclo_button = tk.Button(self.frame_botao, text="Menor Ciclo no Grafo", command=self.menor_ciclo_grafo)
+
         self.configurar_fonte(ordem_button)
         self.configurar_fonte(tamanho_button)
         self.configurar_fonte(vizinhos_vertice_button)
@@ -446,6 +464,7 @@ class Main:
         self.configurar_fonte(arvore_geradora_minima_button)
         self.configurar_fonte(conjunto_estavel_vertices_button)
         self.configurar_fonte(tem_ciclo_button)
+        self.configurar_fonte(menor_ciclo_button)
 
         ordem_button.config(width=self.button_width, height=self.button_height, bg="white")
         tamanho_button.config(width=self.button_width, height=self.button_height, bg="white")
@@ -459,7 +478,7 @@ class Main:
         arvore_geradora_minima_button.config(width=self.button_width,height=self.button_height,bg="white")
         conjunto_estavel_vertices_button.config(width=self.button_width,height=self.button_height,bg="white")
         tem_ciclo_button.config(width=self.button_width,height=self.button_height,bg="white")
-
+        menor_ciclo_button.config(width=self.button_width,height=self.button_height,bg="white")
 
         ordem_button.grid(row=1, column=1, padx=10, pady=10, sticky='w')
         tamanho_button.grid(row=1, column=0, padx=10, pady=10, sticky='e')
@@ -488,6 +507,9 @@ class Main:
         conjunto_estavel_vertices_button.bind("<Leave>", self.button_leave)
         tem_ciclo_button.bind("<Enter>", self.button_hover)
         tem_ciclo_button.bind("<Leave>", self.button_leave)
+        menor_ciclo_button.bind("<Enter>", self.button_hover)
+        menor_ciclo_button.bind("<Leave>", self.button_leave)
+
 
         centro_button = tk.Button(self.frame_botao, text="Centro do Grafo", command=self.mostrar_centro_do_grafo)
         raio_button = tk.Button(self.frame_botao, text="Raio do Grafo", command=self.mostrar_raio_do_grafo)
@@ -498,6 +520,7 @@ class Main:
         self.configurar_fonte(raio_button)
         self.configurar_fonte(diametro_button)
         self.configurar_fonte(graus_vertice_button)
+
 
         centro_button.config(width=self.button_width, height=self.button_height, bg="white")
         raio_button.config(width=self.button_width, height=self.button_height, bg="white")
@@ -517,6 +540,7 @@ class Main:
         arvore_geradora_minima_button.grid(row=4,column=1,padx=10,pady=10)
         conjunto_estavel_vertices_button.grid(row=4, column=0, padx=10, pady=10)
         tem_ciclo_button.grid(row=4,column=2,padx=10,pady=10)
+        menor_ciclo_button.grid(row=4, column=3, padx=10, pady=10)
         centro_button.bind("<Enter>", self.button_hover)
         centro_button.bind("<Leave>", self.button_leave)
         raio_button.bind("<Enter>", self.button_hover)

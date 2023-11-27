@@ -204,3 +204,27 @@ def tem_ciclo(grafo):
     return False
 
 
+def encontrar_menor_ciclo(grafo):
+    if nx.is_directed(grafo):
+        raise ValueError("O grafo deve ser não dirigido/direcionado!")
+
+    menor_ciclo = None
+    menor_peso = float('inf')
+
+    for node in grafo.nodes():
+        if tem_ciclo(grafo):
+            ciclo = nx.find_cycle(grafo, source=node)
+            peso_ciclo = sum(grafo[u][v]['weight'] for u, v in ciclo)
+
+            if peso_ciclo < 0:
+                raise ValueError("O grafo não pode possuir pesos negativos!")
+
+            if peso_ciclo < menor_peso:
+                menor_peso = peso_ciclo
+                menor_ciclo = ciclo
+        else:
+            raise ValueError("O grafo não possui ciclos!")
+
+
+    return menor_ciclo, menor_peso
+

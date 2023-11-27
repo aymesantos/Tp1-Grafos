@@ -23,6 +23,7 @@ def menu():
     print(Fore.CYAN + "[14]. " + Fore.RESET + "Árvore Geradora Mínima (em GraphML)")
     print(Fore.CYAN + "[15]. " + Fore.RESET + "Conjunto de Vértices Estáveis no grafo (Heurística Gulosa)")
     print(Fore.CYAN + "[16]. " + Fore.RESET + "Presença de ciclo no grafo")
+    print(Fore.CYAN + "[17]. " + Fore.RESET + "Encontrar o menor ciclo no grafo considerando a soma dos pesos")
     print(Fore.RED + "0. " + Fore.RESET + "Sair")
   
 if __name__ == "__main__":
@@ -146,12 +147,26 @@ if __name__ == "__main__":
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
         elif escolha == '16':
             if grafo_atual:
-                if tem_ciclo(grafo_atual):
-                    print(Fore.RED + "O grafo possui ciclo." + Fore.RESET)
+                if grafo.tem_ciclo(grafo_atual):
+                    print(Fore.GREEN + "O grafo possui ciclo." + Fore.RESET)
                 else:
-                    print(Fore.GREEN + "O grafo não possui ciclo." + Fore.RESET)
+                    print(Fore.RED + "O grafo não possui ciclo." + Fore.RESET)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+        elif escolha == '17':
+            if grafo_atual:
+                try:
+                    print(Fore.GREEN + "Menor ciclo:" + Fore.RESET)
+                    menor_ciclo,soma_pesos =grafo.encontrar_menor_ciclo(grafo_atual)
+                    for u, v in menor_ciclo:
+
+                        print(f"{Fore.CYAN} {u} -> {v}: peso = {grafo_atual[u][v]['weight']} {Fore.RESET}")
+                    print(Fore.YELLOW + "Soma do peso das arestas: " + str(soma_pesos) + Fore.RESET)
+                except ValueError as erro:
+                    print(Fore.RED + erro + Fore.RESET)
+            else:
+                print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+
 
 
         elif escolha == '0':
