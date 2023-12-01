@@ -270,7 +270,13 @@ class Main:
                 vertices_estaveis = grafo.conjunto_estavel_vertices(self.grafo_atual)
 
                 self.mostrar_resultado("Conjunto de vértices estáveis no grafo: " + str(vertices_estaveis))
-
+    def emparelhamento_maximo_grafo(self):
+        if self.grafo_atual:
+            try:
+                emparelhamento_maximo = grafo.emparelhamento_maximo(self.grafo_atual)
+                self.mostrar_resultado("Emparelhamento Maximo do Grafo: " + str(emparelhamento_maximo))
+            except ValueError as erro:
+                return self.mostrar_erro("Erro!",str(erro))
     def tem_ciclo_grafo(self):
         if self.grafo_atual:
             tem_ciclo = grafo.tem_ciclo(self.grafo_atual)
@@ -453,6 +459,10 @@ class Main:
         conjunto_estavel_vertices_button = tk.Button(self.frame_botao, text="Conjunto Estável de Vértices", command=self.vertices_estaveis_grafo)
         tem_ciclo_button = tk.Button(self.frame_botao, text="Presença de Ciclo no Grafo", command=self.tem_ciclo_grafo)
         menor_ciclo_button = tk.Button(self.frame_botao, text="Menor Ciclo no Grafo", command=self.menor_ciclo_grafo)
+        emparelhamento_maximo_button = tk.Button(self.frame_botao, text="Emparelhamento Máximo", command=self.emparelhamento_maximo_grafo)
+        centro_button = tk.Button(self.frame_botao, text="Centro do Grafo", command=self.mostrar_centro_do_grafo)
+        raio_button = tk.Button(self.frame_botao, text="Raio do Grafo", command=self.mostrar_raio_do_grafo)
+        diametro_button = tk.Button(self.frame_botao, text="Diâmetro do Grafo", command=self.mostrar_diametro_do_grafo)
 
         self.configurar_fonte(ordem_button)
         self.configurar_fonte(tamanho_button)
@@ -465,6 +475,12 @@ class Main:
         self.configurar_fonte(conjunto_estavel_vertices_button)
         self.configurar_fonte(tem_ciclo_button)
         self.configurar_fonte(menor_ciclo_button)
+        self.configurar_fonte(emparelhamento_maximo_button)
+        self.configurar_fonte(arvore_button)
+        self.configurar_fonte(centro_button)
+        self.configurar_fonte(raio_button)
+        self.configurar_fonte(diametro_button)
+        self.configurar_fonte(graus_vertice_button)
 
         ordem_button.config(width=self.button_width, height=self.button_height, bg="white")
         tamanho_button.config(width=self.button_width, height=self.button_height, bg="white")
@@ -479,9 +495,11 @@ class Main:
         conjunto_estavel_vertices_button.config(width=self.button_width,height=self.button_height,bg="white")
         tem_ciclo_button.config(width=self.button_width,height=self.button_height,bg="white")
         menor_ciclo_button.config(width=self.button_width,height=self.button_height,bg="white")
+        emparelhamento_maximo_button.config(width=self.button_width,height=self.button_height,bg="white")
+        centro_button.config(width=self.button_width, height=self.button_height, bg="white")
+        raio_button.config(width=self.button_width, height=self.button_height, bg="white")
+        diametro_button.config(width=self.button_width, height=self.button_height, bg="white")
 
-        ordem_button.grid(row=1, column=1, padx=10, pady=10, sticky='w')
-        tamanho_button.grid(row=1, column=0, padx=10, pady=10, sticky='e')
 
         ordem_button.bind("<Enter>", self.button_hover)
         ordem_button.bind("<Leave>", self.button_leave)
@@ -509,24 +527,21 @@ class Main:
         tem_ciclo_button.bind("<Leave>", self.button_leave)
         menor_ciclo_button.bind("<Enter>", self.button_hover)
         menor_ciclo_button.bind("<Leave>", self.button_leave)
+        emparelhamento_maximo_button.bind("<Enter>", self.button_hover)
+        emparelhamento_maximo_button.bind("<Leave>", self.button_leave)
+        centro_button.bind("<Enter>", self.button_hover)
+        centro_button.bind("<Leave>", self.button_leave)
+        raio_button.bind("<Enter>", self.button_hover)
+        raio_button.bind("<Leave>", self.button_leave)
+        diametro_button.bind("<Enter>", self.button_hover)
+        diametro_button.bind("<Leave>", self.button_leave)
 
 
-        centro_button = tk.Button(self.frame_botao, text="Centro do Grafo", command=self.mostrar_centro_do_grafo)
-        raio_button = tk.Button(self.frame_botao, text="Raio do Grafo", command=self.mostrar_raio_do_grafo)
-        diametro_button = tk.Button(self.frame_botao, text="Diâmetro do Grafo", command=self.mostrar_diametro_do_grafo)
-
-        self.configurar_fonte(arvore_button)
-        self.configurar_fonte(centro_button)
-        self.configurar_fonte(raio_button)
-        self.configurar_fonte(diametro_button)
-        self.configurar_fonte(graus_vertice_button)
 
 
-        centro_button.config(width=self.button_width, height=self.button_height, bg="white")
-        raio_button.config(width=self.button_width, height=self.button_height, bg="white")
-        diametro_button.config(width=self.button_width, height=self.button_height, bg="white")
 
-
+        ordem_button.grid(row=1, column=1, padx=10, pady=10, sticky='w')
+        tamanho_button.grid(row=1, column=0, padx=10, pady=10, sticky='e')
         centro_button.grid(row=1, column=2, padx=10, pady=10)
         raio_button.grid(row=2, column=0, padx=10, pady=10)
         diametro_button.grid(row=2, column=1, padx=10, pady=10)
@@ -541,12 +556,8 @@ class Main:
         conjunto_estavel_vertices_button.grid(row=4, column=0, padx=10, pady=10)
         tem_ciclo_button.grid(row=4,column=2,padx=10,pady=10)
         menor_ciclo_button.grid(row=4, column=3, padx=10, pady=10)
-        centro_button.bind("<Enter>", self.button_hover)
-        centro_button.bind("<Leave>", self.button_leave)
-        raio_button.bind("<Enter>", self.button_hover)
-        raio_button.bind("<Leave>", self.button_leave)
-        diametro_button.bind("<Enter>", self.button_hover)
-        diametro_button.bind("<Leave>", self.button_leave)
+        emparelhamento_maximo_button.grid(row=5,column=1,padx=10,pady=10)
+
 
         self.status_label = tk.Label(self.JanelaTk, text="Nenhum Grafo Carregado!", bg="white", font=(self.TipoFonte, self.TamanhoFonte,"bold"))
         self.results_label = tk.Label(self.JanelaTk, text="", bg="white", font=(self.TipoFonte, self.TamanhoFonte))
