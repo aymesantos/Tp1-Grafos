@@ -228,3 +228,10 @@ def encontrar_menor_ciclo(grafo):
 
     return menor_ciclo, menor_peso
 
+def emparelhamento_maximo(grafo):
+    try:
+        emparelhamento = nx.maximal_matching(grafo)
+        return emparelhamento
+    except nx.NetworkXError as e:
+        print(f"Ocorreu um erro ao calcular o emparelhamento máximo do grafo: {e}")
+        return None

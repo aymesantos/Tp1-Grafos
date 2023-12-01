@@ -24,6 +24,7 @@ def menu():
     print(Fore.CYAN + "[15]. " + Fore.RESET + "Conjunto de Vértices Estáveis no grafo (Heurística Gulosa)")
     print(Fore.CYAN + "[16]. " + Fore.RESET + "Presença de ciclo no grafo")
     print(Fore.CYAN + "[17]. " + Fore.RESET + "Encontrar o menor ciclo no grafo considerando a soma dos pesos")
+    print(Fore.CYAN + "[18]. " + Fore.RESET + "Encontrar o emparelhamento máximo do grafo")
     print(Fore.RED + "0. " + Fore.RESET + "Sair")
   
 if __name__ == "__main__":
@@ -166,6 +167,17 @@ if __name__ == "__main__":
                     print(Fore.RED + erro + Fore.RESET)
             else:
                 print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+        elif escolha == '18':
+            if grafo_atual:
+                try:
+                    print(Fore.GREEN + "Emparelhamento máximo:" + Fore.RESET)
+                    resultado_emparelhamento = grafo.emparelhamento_maximo(grafo_atual)
+                    print("Emparelhamento Máximo:", resultado_emparelhamento)
+                except ValueError as erro:
+                    print(Fore.RED + erro + Fore.RESET)
+            else:
+                print(Fore.RED + "Grafo não carregado." + Fore.RESET)
+            
 
 
 
