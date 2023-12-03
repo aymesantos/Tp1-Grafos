@@ -8,6 +8,7 @@ pip install networkx
 Para usar a interface grafica do trabalho presente no arquivo main_tk.py vai ser necessário a instalação da biblioteca matplotlib e pillow. Instale com os seguintes comandos:
 
 <b> pip install matplotlib </b>
+
 <b> pip install pillow  </b>
 
 A interface grafica utiliza da biblioteca tkinter, que geralmente é nativa do python, porém caso esteja utilizando Linux e o programa acusar erro, talvez seja necessário instalar o tkinter:
