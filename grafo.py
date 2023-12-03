@@ -165,22 +165,21 @@ def arvore_geradora_minima(grafo):
 
     return peso_total
 
+
 #Função para determinar um conjunto estável de vértices em um grafo por meio de um algoritmo guloso
-def conjunto_estavel_vertices(graph):
+def conjunto_estavel_vertices(grafo):
     conjunto_estavel = set()
-    copia_grafo = graph.copy()
+    copia_grafo = grafo.copy()
     while copia_grafo.nodes:
         no_grafo = max(copia_grafo, key=copia_grafo.degree)
         conjunto_estavel.add(no_grafo)
-        #print(f"Adicionado nó {no_grafo} ao conjunto estável")
         vizinhos = set(copia_grafo.neighbors(no_grafo))
         copia_grafo.remove_node(no_grafo)
         copia_grafo.remove_nodes_from(vizinhos)
-        #print(f"Removidos nós {no_grafo} e vizinhos {vizinhos} da cópia do grafo")
 
     return conjunto_estavel
 
-
+#Função para determinar se o grafo possui ciclo
 def tem_ciclo(grafo):
     visitados = set()
 
@@ -203,7 +202,7 @@ def tem_ciclo(grafo):
 
     return False
 
-
+#Função para determinar o menor ciclo de um grafo considerando a soma de pesos positivos
 def encontrar_menor_ciclo(grafo):
     if nx.is_directed(grafo):
         raise ValueError("O grafo deve ser não dirigido/direcionado!")
@@ -228,6 +227,7 @@ def encontrar_menor_ciclo(grafo):
 
     return menor_ciclo, menor_peso
 
+#Função para determinar o emparelhamento maximo de um grafo
 def emparelhamento_maximo(grafo):
     try:
         emparelhamento = nx.maximal_matching(grafo)

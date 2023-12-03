@@ -224,6 +224,7 @@ class Main:
                 self.colocar_grafo(Image_Path)
 
                 self.set_buttons_visibility(True)
+                self.JanelaTk.state('zoomed')
             else:
                 self.mostrar_erro("Erro", "Falha ao converter o grafo para imagem")
 
@@ -360,7 +361,7 @@ class Main:
                 bfs_tree = grafo.arvore_geradora_minima(self.grafo_atual)
                 #nx.write_graphml(bfs_tree, "arvore_busca_largura.graphml")
                 self.colocar_grafo_arvore_geradora_minima("arvore_geradora_minima.graphml")
-                #self.mostrar_resultado(bfs_tree)
+                self.mostrar_resultado("Peso Total da Árvore Geradora Mínima: " +  str(bfs_tree))
 
 
         else:
@@ -427,6 +428,7 @@ class Main:
 
     def main(self):
         self.JanelaTk = tk.Tk()
+
         self.JanelaTk.iconphoto(True, tk.PhotoImage(file=self.icone_path))
         #self.JanelaTk.resizable(False, False)
         self.JanelaTk.configure(bg="white")
@@ -540,23 +542,23 @@ class Main:
 
 
 
-        ordem_button.grid(row=1, column=1, padx=10, pady=10, sticky='w')
-        tamanho_button.grid(row=1, column=0, padx=10, pady=10, sticky='e')
-        centro_button.grid(row=1, column=2, padx=10, pady=10)
-        raio_button.grid(row=2, column=0, padx=10, pady=10)
-        diametro_button.grid(row=2, column=1, padx=10, pady=10)
-        arvore_button.grid(row=3,column=3,padx=10,pady=10)
-        vizinhos_vertice_button.grid(row=3,column=0,padx=10,pady=10)
-        graus_vertice_button.grid(row=3,column=1,padx=10,pady=10)
-        sequencia_graus_grafo_button.grid(row=2, column=2, padx=10, pady=10)
-        excentricidade_vertice_button.grid(row=3,column=2,padx=10,pady=10)
-        distancia_caminho_minimo_button.grid(row=1,column=3,padx=10,pady=10)
-        centralidade_proximidade_c_button.grid(row=2,column=3,padx=10,pady=10)
-        arvore_geradora_minima_button.grid(row=4,column=1,padx=10,pady=10)
-        conjunto_estavel_vertices_button.grid(row=4, column=0, padx=10, pady=10)
-        tem_ciclo_button.grid(row=4,column=2,padx=10,pady=10)
-        menor_ciclo_button.grid(row=4, column=3, padx=10, pady=10)
-        emparelhamento_maximo_button.grid(row=5,column=1,padx=10,pady=10)
+        ordem_button.grid(row=0, column=1, padx=10, pady=10, sticky='w')
+        tamanho_button.grid(row=0, column=0, padx=10, pady=10, sticky='e')
+        centro_button.grid(row=0, column=2, padx=10, pady=10)
+        raio_button.grid(row=1, column=0, padx=10, pady=10)
+        diametro_button.grid(row=1, column=1, padx=10, pady=10)
+        arvore_button.grid(row=2,column=3,padx=10,pady=10)
+        vizinhos_vertice_button.grid(row=2,column=0,padx=10,pady=10)
+        graus_vertice_button.grid(row=2,column=1,padx=10,pady=10)
+        sequencia_graus_grafo_button.grid(row=1, column=2, padx=10, pady=10)
+        excentricidade_vertice_button.grid(row=2,column=2,padx=10,pady=10)
+        distancia_caminho_minimo_button.grid(row=0,column=3,padx=10,pady=10)
+        centralidade_proximidade_c_button.grid(row=1,column=3,padx=10,pady=10)
+        arvore_geradora_minima_button.grid(row=3,column=1,padx=10,pady=10)
+        conjunto_estavel_vertices_button.grid(row=3, column=0, padx=10, pady=10)
+        tem_ciclo_button.grid(row=3,column=2,padx=10,pady=10)
+        menor_ciclo_button.grid(row=3, column=3, padx=10, pady=10)
+        emparelhamento_maximo_button.grid(row=0,column=4,padx=10,pady=10)
 
 
         self.status_label = tk.Label(self.JanelaTk, text="Nenhum Grafo Carregado!", bg="white", font=(self.TipoFonte, self.TamanhoFonte,"bold"))
